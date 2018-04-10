@@ -13,7 +13,7 @@ class Grades(models.Model):
     isDelete = models.BooleanField(default=False)
 
 
-class Student(models.Model):
+class Students(models.Model):
     sname = models.CharField(max_length=20)
     sgender = models.BooleanField(default=True)
     sage = models.IntegerField()
