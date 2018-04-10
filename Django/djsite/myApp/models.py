@@ -12,6 +12,10 @@ class Grades(models.Model):
     gboynum = models.IntegerField()
     isDelete = models.BooleanField(default=False)
 
+    def __str__(self):
+        return '{name}-{girl}-{boy}'.format(name=self.gname, girl=self.ggirlnum,
+        boy=self.gboynum)
+
 
 class Students(models.Model):
     sname = models.CharField(max_length=20)
