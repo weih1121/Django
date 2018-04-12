@@ -12,14 +12,12 @@ class StudentInfo(admin.TabularInline):
 @admin.register(Grades)
 class GradesAdmin(admin.ModelAdmin):    #GradeAdmin新的管理页面
     inlines = [StudentInfo]
-    # list_display = ['pk', 'gname']
     #列表页属性
     list_display = ['pk', 'gname', 'gdate', 'ggirlnum', 'gboynum', 'isDelete']
     list_filter = ['gdate', 'ggirlnum', 'gboynum']
     search_fields = ['gdate']
     list_per_page = 3
 
-    #
     # #添加，修改页属性
     #fields = ['isDelete', 'gname', 'gdate', 'ggirlnum', 'gboynum']               #规定属性先后顺序
     fieldsets = [
@@ -45,13 +43,10 @@ class StudentsAdmin(admin.ModelAdmin):  # GradeAdmin新的管理页面
     isdelete.short_description = "删除"
     # 列表页属性
     list_display = ['pk', 'sname', gender, 'sage', 'scountend', isdelete, 'sgrade']
-
     list_filter = ['sname', 'sgender']
     search_fields = ['pk']
     list_per_page = 3
-    #
 
-    #
     # #添加，修改页属性
     # fields = []
     fieldsets = [
