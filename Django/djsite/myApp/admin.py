@@ -16,7 +16,7 @@ class GradesAdmin(admin.ModelAdmin):    #GradeAdmin新的管理页面
     list_display = ['pk', 'gname', 'gdate', 'ggirlnum', 'gboynum', 'isDelete']
     list_filter = ['gdate', 'ggirlnum', 'gboynum']
     search_fields = ['gdate']
-    list_per_page = 3
+    list_per_page = 8
 
     # #添加，修改页属性
     #fields = ['isDelete', 'gname', 'gdate', 'ggirlnum', 'gboynum']               #规定属性先后顺序
@@ -45,7 +45,7 @@ class StudentsAdmin(admin.ModelAdmin):  # GradeAdmin新的管理页面
     list_display = ['pk', 'sname', gender, 'sage', 'scountend', isdelete, 'sgrade']
     list_filter = ['sname', 'sgender']
     search_fields = ['pk']
-    list_per_page = 3
+    list_per_page = 8
 
     # #添加，修改页属性
     # fields = []
