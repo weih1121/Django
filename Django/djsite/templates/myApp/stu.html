@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>学生列表</title>
+</head>
+<body>
+{#    <a href="/sun/good/">链接</a>#}
+    <a href="{% url 'myApp:good' 1 %}">链接</a>
+
+
+    <h1>学生列表</h1>
+    <ul>
+        {% for stu in students %}
+            {% if forloop.counter|divisibleby:2 %}
+            <li style="color:dodgerblue">
+                {{ forloop.counter }}{{ stu.sname }} -- {{ stu.sgrade }}
+            </li>
+                {% else %}
+                <li style="color:olivedrab">
+                {{ forloop.counter }}{{ stu.sname }} -- {{ stu.sgrade }}
+                </li>
+            {% endif %}
+        {% empty %}
+            <li>没有学生</li>
+        {% endfor %}
+        {% comment %}
+            <h1>sunck is a coll man</h1>
+            <h1>sunck is a collfdholusajuhloiua man</h1>
+        {% endcomment %}
+
+        {% ifequal 'abs' 'abs' %}
+            <h1>USISO搜索</h1>
+        {% endifequal %}
+
+        <h1>{{ str|upper }}</h1>
+        <h1>{{ list|join:'##' }}</h1>
+        <h1>{{ test|default:'默认没有值' }}</h1>
+        <h1>{{ num }}</h1>
+        <h1>{{ num|add:10 }}</h1>
+        <h1>{{ num|add:-10 }}</h1>
+        <h1>{%  widthratio num 1 5%} </h1>
+        <h1>{%  widthratio num 2 1%}</h1>
+    </ul>
+</body>
+</html>

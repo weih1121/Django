@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #header{
+            width:100%;
+            height: 100px;
+            background-color: aquamarine;
+        }
+    </style>
+</head>
+<body>
+    <a href="/sun/inhert/">继承</a>
+    <div id="header">header</div>
+    <div id="main"></div>
+        {% block  main%}
+
+        {% endblock main %}
+    <div id="footer">header</div>
+</body>
+</html>

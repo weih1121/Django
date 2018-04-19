@@ -168,10 +168,8 @@ def main(request):
     return render(request, 'myApp/main.html',
                   {'username':username})
 
-
 def login(request):
     return render(request, 'myApp/login.html')
-
 
 def showmain(request):
     username = request.POST.get('username')
@@ -186,3 +184,85 @@ def quit(request):
     # request.session.clear()   #method 2
     request.session.flush() #method 3
     return redirect(to='/sun/main/')
+
+#template
+def stu(request):
+    stulist = Students.stuObj.all()
+    # return render(request, 'myApp/good.html')
+    return render(request, 'myApp/stu.html',  {'students':stulist, 'list': ['a', 'b', 'c'], 'test': '我是test', 'num':80})
+
+def good(request, id):
+    return render(request, 'myApp/good.html', {'students':[], 'num':id})
+
+#模板继承
+def base(request):
+    return render(request, 'myApp/base.html')
+
+def inhert(request):
+    return render(request, 'myApp/inhertit.html')
+
+
+def postfile(request):
+    return render(request, 'myApp/post.html')
+
+def showinfo(request):
+    name = request.POST['username']
+    pwd = request.POST['passwd']
+    return render(request, 'myApp/showinfo.html', {'username':name, 'passwd':pwd})
+
+
+def verifycode(request):
+    from PIL import Image, ImageDraw, ImageFont
+    import random
+
+    bgcolor = (random.randrange(20, 100), random.randrange(20, 100),
+               random.randrange(20, 100))
+    width = 150
+    height = 50
+
+    im = Image.new('RGB', (width, height), bgcolor)
+    draw = ImageDraw.Draw(im)
+    for i in range(0, 100):
+        xy = (random.randrange(0, width), random.randrange(0, height))
+        fill = (random.randrange(0, 255), 255, random.randrange(0, 255))
+        draw.point(xy, fill=fill)
+
+    str = '1234567890QWERTYUIOPASDFGHJKLZXCVBNMqwertyuiopasdfghjklzxcvbnm'
+    rand_str = ''
+    for i in range(0, 4):
+        rand_str += str[random.randrange(0, len(str))]
+    font = ImageFont.truetype(r'C:\Windows\Fonts\ROCK.TTF', 40)
+    colors = []
+    pos = [5, 25, 50, 75]
+    ins = 0
+    for i in range(4):
+        colors.append((255, random.randrange(0, 255), random.randrange(0, 255)))
+    for s, color in zip(rand_str, colors):
+        draw.text((pos[ins], 2), s, font=font, fill=color)
+        ins += 1
+    print(rand_str)
+    del draw
+    request.session['vfcode'] = rand_str
+    import io
+    buf = io.BytesIO()
+    im.save(buf, 'png')
+
+    return HttpResponse(buf.getvalue(), 'image/png')
+
+def verify(request):
+    f = request.session.get('flag')
+    string = ''
+    if f == False:
+        string = "请重新输入"
+    request.session.clear()
+    return render(request, 'myApp/verifycodefile.html', {'flag':string})
+
+def verifycheck(request):
+    raw = request.POST['verifycode'].upper()
+    code = request.session['vfcode'].upper()
+
+    if raw == code:
+        return render(request, 'myApp/success.html')
+    else:
+        request.session['flag'] = False
+        return redirect(to='/sun/verify/')
