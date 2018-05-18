@@ -33,7 +33,7 @@ class StudentsAdmin(admin.ModelAdmin):  # GradeAdmin新的管理页面
             return '男'
         return '女'
     #设置页面列的名称
-    gender.short_description =  "性别"
+    gender.short_description = "性别"
 
     def isdelete(self):
         if self.isDelete:
@@ -50,8 +50,8 @@ class StudentsAdmin(admin.ModelAdmin):  # GradeAdmin新的管理页面
     # #添加，修改页属性
     # fields = []
     fieldsets = [
-        ("num" , {"fields" : ['sname', 'sage']}),
-        ("other", {"fields" : [ 'sgender', 'scountend',  'isDelete', 'sgrade']})
+        ("num", {"fields": ['sname', 'sage']}),
+        ("other", {"fields" : [ 'sgender', 'scountend', 'isDelete', 'sgrade']}),
     ]
 
     #执行动作位置
@@ -60,3 +60,6 @@ class StudentsAdmin(admin.ModelAdmin):  # GradeAdmin新的管理页面
 
 #admin.site.register(Grades, GradesAdmin)       #要将表注册到自定义的管理界面，才能用到那个表
 #admin.site.register(Students, StudentsAdmin)
+
+from .models import Text
+admin.site.register(Text)

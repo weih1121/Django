@@ -58,4 +58,24 @@ urlpatterns = [
     url(r'^vcode/$', views.verifycode, name='vcode'),
     url(r'^verify/$', views.verify, name='verify'),
     url(r'^verifycheck/$', views.verifycheck, name='verifycheck'),
+
+    #静态文件路由
+    url(r'^index/$', views.indexcss),
+
+    #文件上传
+    url(r'^upfile/$', views.upfile),
+    url(r'^savefile/$', views.savefile, name='savefile'),
+
+    #学生分页显示
+    url(r'^page/(\d+)/$', views.page, name='page'),
+
+    #ajax
+    url(r'^ajaxstudent/$', views.ajaxstudent),
+    url(r'^studentsinfo/$', views.studentsinfo),
+
+    #富文本
+    url(r'^edit/$', views.edit),
+
+    #celery
+    url(r'^celery/$', views.celery)
 ]

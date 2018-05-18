@@ -247,7 +247,7 @@ def verifycode(request):
     buf = io.BytesIO()
     im.save(buf, 'png')
 
-    return HttpResponse(buf.getvalue(), 'image/png')
+    return HttpResponse(buf.getvalue(), 'img/png')
 
 def verify(request):
     f = request.session.get('flag')
@@ -266,3 +266,61 @@ def verifycheck(request):
     else:
         request.session['flag'] = False
         return redirect(to='/sun/verify/')
+
+def indexcss(request):
+    return render(request, 'myApp/index_css.html')
+
+
+#文件上传
+def upfile(request):
+    return render(request, 'myApp/upfile.html')
+
+
+import os
+from django.conf import settings
+def savefile(request):
+    if request.method == 'POST':
+        f = request.FILES['file']
+        #合成文件在服务器端得到路径
+        filePath = os.path.join(settings.MEDIA_ROOT, f.name)
+        with open(filePath, 'wb') as fp:
+            for info in f.chunks():
+                fp.write(info)
+        return HttpResponse('上传成功')
+    else:
+        return HttpResponse('上传失败！')
+
+
+from django.core.paginator import Paginator
+def page(request, id):
+    stulist = Students.stuObj.all()
+    page_num = 6
+    page = Paginator(stulist, page_num)
+    page_list = page.page(id)
+    return render(request, 'myApp/studentsPage.html', {'stulist':page_list})
+
+def ajaxstudent(request):
+    stu = Students.stuObj.all()
+    return render(request, 'myApp/ajaxstudents.html')
+
+from django.http import JsonResponse
+def studentsinfo(request):
+    stu = Students.stuObj.all()
+    list = []
+    for stu in stu:
+        list.append([stu.sname, stu.sage])
+    return JsonResponse({"data":list})
+
+
+#富文本
+def edit(request):
+    return render(request, 'myApp/edit.html')
+
+
+import time
+def celery(request):
+    print("uio")
+    time.sleep(5)
+    print("uio")
+
+    return render(request, 'myApp/celery.html')

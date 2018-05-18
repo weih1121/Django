@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'myApp',
+    'tinymce',
+    'djcelery',                         #配置celery第一步
 ]
 
 MIDDLEWARE = [
@@ -48,6 +50,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    # 'middleware.myApp.myMiddle.MyMiddle',
 ]
 
 ROOT_URLCONF = 'djsite.urls'
@@ -123,7 +126,12 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_URL = '/static/'
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static')
+]
 
+#上传文件目录
+MEDIA_ROOT=os.path.join(BASE_DIR, r'static\upfile')
 # SESSION_ENGINE = 'redis_sessions.session'
 # SESSION_REDIS_HOST = 'localhost'
 # SESSION_REDIS_PORT = 6379
@@ -131,3 +139,17 @@ STATIC_URL = '/static/'
 # SESSION_REDIS_PASSWORD = 'ROOT'
 # SESSION_REDIS_PREFIX = 'session'
 
+#富文本
+#配置富文本的模式还有大小, 为了看到效果，去模型中创建一个模型
+TINYMCE_DEFAULT_CONFIG = {
+    'theme': 'advanced',
+    'width': 600,
+    'height': 400,
+
+}
+
+#celery配置第二步
+import djcelery
+djcelery.setup_loader() #初始化队列
+BROKER_URL='redis://:redis的密码@127.0.0.1:6379/0' #使用redis的第0个库
+CELERY_IMPORTS=('myApp.task')                       #task中定义任务

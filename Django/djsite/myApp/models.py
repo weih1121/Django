@@ -66,3 +66,7 @@ class Students(models.Model):
         ordering = ['id']
 
 
+from  tinymce.models import HTMLField
+class Text(models.Model):
+    str = HTMLField()
+
